@@ -19,11 +19,11 @@ if git rev-parse --git-dir >/dev/null 2>&1; then
     git diff --cached --name-only 2>/dev/null || true
     git diff --name-only 2>/dev/null || true
     git ls-files --others --exclude-standard 2>/dev/null || true
-  } | grep -iE '\.(py|js|ts|tsx|jsx|go|rs|java|rb|php|c|h|cpp|hpp|yaml|yml|json|toml|cfg|ini|md|rst|sql|sh|bash|css|scss|less|html|vue|svelte)$' | grep -vE '(^|/)\.(claude|git)/' | head -1)
-  [ -n "$ALL" ] && CHANGED=1
+  } | grep -iE '\.(py|js|ts|tsx|jsx|go|rs|java|rb|php|c|h|cpp|hpp|yaml|yml|json|toml|cfg|ini|md|rst|sql|sh|bash|css|scss|less|html|vue|svelte)$' | grep -vE '(^|/)\.(claude|git)/' | head -1 || true)
+  if [ -n "$ALL" ]; then CHANGED=1; fi
 else
-  RECENT=$(find . -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.go" -o -name "*.yaml" -o -name "*.yml" -o -name "*.json" -o -name "*.md" -o -name "*.sql" -o -name "*.sh" -o -name "*.css" -o -name "*.html" \) -mmin -60 2>/dev/null | grep -vE '(^|/)\.(claude|git)/' | head -1)
-  [ -n "$RECENT" ] && CHANGED=1
+  RECENT=$(find . -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.go" -o -name "*.yaml" -o -name "*.yml" -o -name "*.json" -o -name "*.md" -o -name "*.sql" -o -name "*.sh" -o -name "*.css" -o -name "*.html" \) -mmin -60 2>/dev/null | grep -vE '(^|/)\.(claude|git)/' | head -1 || true)
+  if [ -n "$RECENT" ]; then CHANGED=1; fi
 fi
 
 if [ "$CHANGED" -eq 0 ]; then
