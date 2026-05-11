@@ -1,0 +1,6 @@
+# IDE
+.vscode/
+.idea/
+
+# App data
+babel.json
